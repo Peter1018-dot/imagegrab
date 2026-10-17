@@ -27,3 +27,6 @@ screenshots/probe-*.png
 # 系统文件
 Thumbs.db
 .DS_Store
+
+# 表单上传用的副本
+表单材料/
