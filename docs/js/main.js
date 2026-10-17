@@ -115,6 +115,16 @@
       { rootMargin: '-30% 0px -55% 0px', threshold: 0 }
     );
     sections.forEach((section) => spy.observe(section));
+
+    // 回到首屏时清除高亮，避免导航停留在最后一个区块
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (window.scrollY < 220) setActive('');
+      },
+      { passive: true }
+    );
+    if (window.scrollY < 220) setActive('');
   }
 
   /* ---------------- 进入视口淡入上移动画 ---------------- */
