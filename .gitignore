@@ -1,0 +1,29 @@
+# 依赖
+node_modules/
+
+# 测试产生的临时目录
+tests/.test-profile/
+tests/.manual-profile*/
+tests/.probe-profile/
+tests/.debug-profile*/
+tests/.puppeteer-profile/
+tests/.pptr2/
+tests/.min-profile/
+tests/.pref-profile/
+tests/.probe-dl-profile/
+tests/downloads/
+tests/debug-downloads*/
+tests/manual-downloads/
+tests/probe-downloads/
+tests/pref-downloads/
+tests/min-downloads/
+tests/cert/
+tests/.dbg-profile/
+
+# 调试截图
+screenshots/debug-*.png
+screenshots/probe-*.png
+
+# 系统文件
+Thumbs.db
+.DS_Store

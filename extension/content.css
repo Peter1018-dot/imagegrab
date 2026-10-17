@@ -1,0 +1,157 @@
+/* ============================================================
+   图提取 ImageGrab - 页面悬浮按钮样式
+   使用 #imagegrab-fab 命名空间，避免与电商页面自身样式冲突
+   ============================================================ */
+
+#imagegrab-fab {
+  all: initial;
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  z-index: 2147483646 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 132px !important;
+  height: 48px !important;
+  padding: 0 20px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  outline: none !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #9333ea 100%) !important;
+  color: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow:
+    0 10px 24px rgba(79, 70, 229, 0.38),
+    0 2px 6px rgba(15, 23, 42, 0.12) !important;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    filter 0.22s ease !important;
+  -webkit-font-smoothing: antialiased !important;
+  user-select: none !important;
+}
+
+#imagegrab-fab:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow:
+    0 16px 32px rgba(79, 70, 229, 0.45),
+    0 4px 10px rgba(15, 23, 42, 0.14) !important;
+  filter: brightness(1.05) !important;
+}
+
+#imagegrab-fab:active {
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.32) !important;
+}
+
+#imagegrab-fab:focus-visible {
+  outline: 3px solid rgba(147, 51, 234, 0.35) !important;
+  outline-offset: 3px !important;
+}
+
+#imagegrab-fab .ig-icon {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 auto !important;
+  display: block !important;
+  pointer-events: none !important;
+}
+
+#imagegrab-fab .ig-label {
+  display: inline-block !important;
+  pointer-events: none !important;
+}
+
+/* 加载中的旋转指示器（默认隐藏） */
+#imagegrab-fab .ig-spinner {
+  display: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  border-top-color: #ffffff !important;
+  border-radius: 50% !important;
+  animation: imagegrab-spin 0.7s linear infinite !important;
+  pointer-events: none !important;
+}
+
+#imagegrab-fab.is-loading {
+  cursor: progress !important;
+  opacity: 0.92 !important;
+}
+
+#imagegrab-fab.is-loading .ig-icon {
+  display: none !important;
+}
+
+#imagegrab-fab.is-loading .ig-spinner {
+  display: inline-block !important;
+}
+
+#imagegrab-fab.is-success {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+  box-shadow: 0 10px 24px rgba(16, 185, 129, 0.4) !important;
+}
+
+#imagegrab-fab.is-error {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%) !important;
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.38) !important;
+}
+
+@keyframes imagegrab-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 轻提示 */
+#imagegrab-toast {
+  all: initial;
+  position: fixed !important;
+  left: 50% !important;
+  bottom: 88px !important;
+  z-index: 2147483647 !important;
+  transform: translate(-50%, 12px) !important;
+  max-width: min(420px, calc(100vw - 40px)) !important;
+  padding: 12px 18px !important;
+  border-radius: 12px !important;
+  background: rgba(15, 23, 42, 0.92) !important;
+  color: #f8fafc !important;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+#imagegrab-toast.is-show {
+  opacity: 1 !important;
+  transform: translate(-50%, 0) !important;
+}
+
+/* 小屏幕适配 */
+@media (max-width: 640px) {
+  #imagegrab-fab {
+    right: 16px !important;
+    bottom: 16px !important;
+    height: 44px !important;
+    min-width: 116px !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+  }
+
+  #imagegrab-toast {
+    bottom: 76px !important;
+  }
+}

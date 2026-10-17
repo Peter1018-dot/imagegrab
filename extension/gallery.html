@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片预览 · 图提取 ImageGrab</title>
+    <link rel="icon" href="icons/icon32.png" />
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- 顶部导航栏 -->
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <span class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" opacity=".55" />
+                <path d="M12 6.8v8.4m0 0 3.4-3.4M12 15.2 8.6 11.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="brand-text">
+              <strong>图提取</strong>
+              <small>IMAGEGRAB</small>
+            </span>
+          </div>
+
+          <div class="source">
+            <span class="site-badge" id="siteBadge">电商平台</span>
+            <div class="source-meta">
+              <h1 id="pageTitle" title="商品图片预览">商品图片预览</h1>
+              <a class="page-link" id="pageLink" href="#" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M14 4h6v6M20 4l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M18 13.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                </svg>
+                <span id="pageHost">商品详情页</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="top-actions">
+            <div class="selection-pill" title="已选图片数量">
+              已选 <strong id="selectedCount">0</strong><span class="slash">/</span><span id="totalCount">0</span>
+            </div>
+            <button class="btn btn-ghost" id="selectAll" type="button">全选</button>
+            <button class="btn btn-ghost" id="invert" type="button">反选</button>
+            <button class="btn btn-primary" id="downloadBtn" type="button" disabled>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4v10m0 0 3.6-3.6M12 14l-3.6-3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 17v1.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              下载选中
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- 下载进度 -->
+      <div class="progress" id="progress" hidden>
+        <div class="progress-inner">
+          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="progress-text" id="progressText">准备下载…</div>
+        </div>
+      </div>
+
+      <!-- 主体内容 -->
+      <main class="main">
+        <section class="page-head">
+          <div>
+            <h2>共 <span id="countInline">0</span> 张商品图片</h2>
+            <p>勾选需要保存的图片，下载时将统一转换为 PNG 格式</p>
+          </div>
+          <div class="hint">
+            <span class="hint-dot"></span>
+            点击卡片即可勾选 / 取消
+          </div>
+        </section>
+
+        <div class="grid" id="grid" aria-live="polite"></div>
+
+        <section class="empty" id="empty" hidden>
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none">
+              <rect x="8" y="12" width="48" height="40" rx="8" stroke="currentColor" stroke-width="2.5" stroke-dasharray="5 5" />
+              <circle cx="23" cy="26" r="4" stroke="currentColor" stroke-width="2.5" />
+              <path d="M14 45l10-10 8 8 6-6 12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h2>还没有提取到图片</h2>
+          <p>请打开淘宝、天猫、京东或拼多多商家版的商品详情页，点击页面右下角的「获取图片」按钮。</p>
+        </section>
+      </main>
+
+      <!-- 底部操作栏 -->
+      <footer class="bottombar">
+        <div class="bottombar-inner">
+          <div class="bottom-info">
+            <span class="status-dot"></span>
+            已选 <strong id="selectedCountBottom">0</strong> 张 · 下载后保存为 PNG
+          </div>
+          <div class="bottom-actions">
+            <button class="btn btn-ghost" id="selectAllBottom" type="button">全选</button>
+            <button class="btn btn-primary" id="downloadBtnBottom" type="button" disabled>下载选中</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- 轻提示 -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- 图片大图预览 -->
+    <div class="preview" id="preview" hidden>
+      <div class="preview-backdrop" data-close="preview"></div>
+      <div class="preview-dialog" role="dialog" aria-modal="true" aria-label="图片预览">
+        <button class="preview-close" type="button" data-close="preview" aria-label="关闭预览">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+        <div class="preview-stage">
+          <img id="previewImg" alt="商品图片预览" />
+        </div>
+        <div class="preview-bar">
+          <span id="previewDims">尺寸未知</span>
+          <a id="previewOpen" href="#" target="_blank" rel="noopener noreferrer">在新标签页打开原图</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="gallery.js"></script>
+  </body>
+</html>
