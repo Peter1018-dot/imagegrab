@@ -139,6 +139,16 @@ node tests/run-test-puppeteer.js
 
 插件不会上传任何页面数据，所有图片处理均在本地浏览器内完成。
 
+## 验收截图
+
+### GitHub 仓库
+
+![GitHub 仓库](screenshots/04-GitHub仓库截图.png)
+
+### GitHub Pages 发布
+
+![GitHub Pages 官网](screenshots/06-使用GitHubPages发布的官网截图.png)
+
 ## License
 
 [MIT](LICENSE)
